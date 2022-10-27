@@ -1,0 +1,127 @@
+@using Microsoft.AspNetCore.Authorization
+@using OrchardCore.Contents
+@model ListAdvertisementsViewModel
+@inject IAuthorizationService AuthorizationService;
+<div class="toping-box">
+	<div class="container">
+		<ul class="pagin">
+			<li><a href="">Главная</a></li>
+			<li><a href="">Кредитный департамент</a></li>
+			<li><a href="">Отдел прогназирования спроса</a></li>
+		</ul>
+		<div class="title">Доска объявлений</div>
+ 		<form method="get" asp-action="Create" asp-area="AdamCode.Advertisement" asp-controller="Home" class="thanks-from default-form cat-form">
+			<div class="inp">
+				<p class="label">Категории</p>
+				<select id="filterSelect">
+					<option value="all">Любая</option>
+					@foreach(var category in Model.Categories)
+					{
+						if(Model.CurrentCategory == category.Value)
+						{
+							<option value="@category.Value" selected>@category.Text</option>
+						}
+						else
+						{
+							<option value="@category.Value">@category.Text</option>
+						}
+					}
+				</select>
+			</div>
+			@if(await AuthorizationService.AuthorizeAsync(User, CommonPermissions.EditOwnContent))
+			{
+				<div class="ch">
+					<input @(Model.MyAdvertFilter == true ? "checked" : "") type="checkbox" id="c1">
+					<label for="c1">Мои объявления</label>
+				</div>
+			}
+			<input class="btn" type="submit" value="+ Добавить объявлени">
+		</form>
+	</div>
+</div>
+<div class="container">
+	<div class="two-columns">
+		<div class="row">
+			<div class="col-md-9 col-sm-12">
+				<div class="content-box">
+							
+					<div class="news-box section-padding">
+						@foreach(var shape in Model.ContentItems){
+							<div class="news-item">
+								<div class="row">
+									@await DisplayAsync(shape.Header)
+
+									<div class="col-sm-8 col-xs-12">
+										<div class="text">
+											<div class="date date-bottom">@(shape.ContentItem.PublishedUtc == null ? shape.ContentItem.ModifiedUtc.ToString("M") : shape.ContentItem.PublishedUtc.ToString("M"))</div>
+											@await DisplayAsync(shape.Content)
+											<div class="ico-name">
+												<a href="">
+												<div class="ico"><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></div>
+												<div class="n">Николай Воложский</div>
+												</a>
+											</div>
+										</div>
+									</div>
+								</div>
+							</div>
+						}
+						@await DisplayAsync(Model.Pager)
+@*						<div class="pager">
+							<ul>
+								<li class="active"><a href="">1</a></li>
+								<li><a href="">2</a></li>
+								<li><a href="">3</a></li>
+								<li><a href="">4</a></li>
+								<li><a href="">5</a></li>
+								<li><a href="">Следующая ></a></li>
+							</ul>
+						</div>*@
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<div class="aside aside-moved-top">
+					@await RenderSectionAsync("FastLinkAside", required:false)
+					@await RenderSectionAsync("BirthdayAside", required:false)
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<script at="Foot" type="text/javascript">
+	let filterSelect = document.getElementById("filterSelect");
+	let checkBoxInput = document.querySelector("#c1");
+
+
+	let category = '@Model.CurrentCategory'
+	let advertFilter = '@Model.MyAdvertFilter'
+	let path = window.location.protocol + '//' + window.location.hostname + ':' + window.location.port;
+	let path2 = window.location.href;
+	filterSelect.onchange = function () {
+        
+
+	var url = `${path}?idCategory=${filterSelect.value}&myAdverts=${advertFilter}`;
+
+	if(filterSelect.value == 'all')
+	{
+	url = `${path}?MyAdverts=${advertFilter}`;
+	}
+
+	document.location.href = url;
+	} 
+
+	checkBoxInput.onchange = function(){
+	var url = `${path}?idCategory=${category}&myAdverts=${checkBoxInput.checked}`
+	if (category === "") {
+	url = `${path}?myAdverts=${checkBoxInput.checked}`
+	}
+	document.location.href = url;
+	}
+
+
+	
+</script>

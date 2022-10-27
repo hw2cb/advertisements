@@ -1,0 +1,47 @@
+﻿@using System.Security.Claims
+
+@{
+	var userNameIdentifier = User.FindFirstValue(ClaimTypes.NameIdentifier);
+	var isOwner = Model.ContentItem.Owner == userNameIdentifier || Model.ContentItem.Owner == User.Identity.Name;
+}
+
+<div class="toping-box">
+	<div class="container">
+		<ul class="pagin">
+			<li><a href="">Главная</a></li>
+			<li><a href="">Кредитный департамент</a></li>
+			<li><a href="">Кредитный департамент</a></li>
+		</ul>
+		@await DisplayAsync(Model.Header)
+	</div>
+</div>
+<div class="container">
+	<div class="two-columns">
+		<div class="row">
+			<div class="col-md-9 col-sm-12">
+				<div class="content-box">
+							
+					<div class="desk-item-box section-padding">
+						@await DisplayAsync(Model.Content)
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<div class="aside aside-moved-top">	
+					@if (isOwner || User.IsInRole("Administrator") || User.IsInRole("Moderator"))
+					{
+						ViewBag.ContentItem = Model.ContentItem;
+						@await RenderSectionAsync("StatusAdvAside", required: false)
+						@await RenderSectionAsync("FastLinkAside", required:false)
+					}
+					else
+					{
+						@await RenderSectionAsync("FastLinkAside", required:false)
+						@await RenderSectionAsync("BirthdayAside", required:false)
+					}
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

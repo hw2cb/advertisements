@@ -1,0 +1,17 @@
+﻿@*@model OrchardCore.Taxonomies.ViewModels.DisplayTaxonomyFieldViewModel*@
+@model dynamic
+@using OrchardCore.Mvc.Utilities;
+
+@{
+	var term = await Orchard.GetTaxonomyTermAsync((string)Model.TaxonomyContentItemId, (string)Model.TermContentItemIds[0]);
+}
+
+<div class="hh">
+	<div class="date">@(Model.Field.ContentItem.PublishedUtc == null ? Model.Field.ContentItem.ModifiedUtc.ToString("M") : Model.Field.ContentItem.PublishedUtc.ToString("M")) · @term</div>
+	<div class="who">
+		<a href="">
+		<div class="img"><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></div>
+		<div class="name">Анна Ефремова</div>
+		</a>
+	</div>
+</div>

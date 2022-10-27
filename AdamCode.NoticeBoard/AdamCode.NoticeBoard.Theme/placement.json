@@ -1,0 +1,62 @@
+{
+  "TaxonomyField": [
+    {
+      "place": "Content:1",
+      "contentType": [
+        "Advertisement"
+      ]
+    },
+    {
+      "place": "Content:0",
+      "contentType": [
+        "Advertisement"
+      ],
+      "displayType": "Summary"
+    }
+  ],
+  "MediaField": [
+    {
+      "place": "Content:2",
+      "contentType": [
+        "Advertisement"
+      ]
+    },
+    {
+      "place": "Header:0",
+      "contentType": [
+        "Advertisement"
+      ],
+      "displayType": "Summary"
+    }
+  ],
+  "TitlePart": [
+    {
+      "place": "Header:0",
+      "contentType": [
+        "Advertisement"
+      ]
+    },
+    {
+      "place": "Content:1",
+      "contentType": [
+        "Advertisement"
+      ],
+      "displayType": "Summary"
+    }
+  ],
+  "TextField": [
+    {
+      "place": "Content:3",
+      "contentType": [
+        "Advertisement"
+      ]
+    },
+    {
+      "place": "-",
+      "contentType": [
+        "Advertisement"
+      ],
+      "displayType": "Summary"
+    }
+  ]
+}

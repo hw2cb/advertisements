@@ -1,0 +1,10 @@
+﻿
+@if(Model.ContentItem.Published)
+{
+    <div class="name"><a display-for="@Model.TitlePart.ContentItem">@Model.Title</a></div>
+}
+else
+{
+    <!-- !ContentPreview-->
+    <div class="name"><a asp-action="Details" asp-controller="Home" asp-area="AdamCode.Advertisement" asp-route-contentItemId="@Model.ContentItem.ContentItemId">@Model.Title</a></div>
+}

@@ -1,0 +1,36 @@
+﻿
+<div class="toping-box">
+	<div class="container">
+		<ul class="pagin">
+			<li><a href="">Главная</a></li>
+		</ul>
+		<div class="title">Редактирование объявления</div>
+	</div>
+</div>
+<div class="container">
+	<div class="two-columns">
+		<div class="row">
+			<div class="col-md-9 col-sm-12">
+				<div class="content-box">
+					<div class="section-padding">
+						<form asp-area="AdamCode.Advertisement" asp-controller="Home" asp-action="Edit" asp-route-contentItemId="@Model.ContentItem.ContentItemId" asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]" method="post" enctype="multipart/form-data" class="default-form edit-form">
+							@await DisplayAsync(Model.Content)
+							<div class="row-inp">
+								<p class="label">Объявление будет отправлено на модерацию</p>
+								<button name="submit.Publish" value="submit.PublishAndContinue" type="submit" class="btn">Сохранить</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<div class="aside aside-moved-top">
+					@{
+						ViewBag.ContentItem = Model.ContentItem;
+					}
+					@await RenderSectionAsync("StatusAdvAside", required: false)
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

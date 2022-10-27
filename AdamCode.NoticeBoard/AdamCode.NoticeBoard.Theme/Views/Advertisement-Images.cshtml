@@ -1,0 +1,11 @@
+﻿@using OrchardCore.ContentManagement.Metadata.Models
+@using OrchardCore.Mvc.Utilities
+
+
+<div class="row desk-photos">
+	@foreach(var path in Model.Paths){
+		<div class="col-sm-4 col-xs-12">
+			<a rel="lightbox[gallery1]" title="Image 1 title" href="img/1.png"><img src="@Orchard.AssetUrl((string)path)" alt=""></a>
+		</div>
+	}
+</div>

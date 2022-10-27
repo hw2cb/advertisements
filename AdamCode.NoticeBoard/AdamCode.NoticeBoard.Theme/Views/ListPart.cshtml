@@ -1,0 +1,21 @@
+﻿@model OrchardCore.Lists.ViewModels.ListPartViewModel
+
+@inject OrchardCore.ContentManagement.Display.IContentItemDisplayManager ContentItemDisplayManager
+
+@if (Model.ContentItems.Any())
+{
+    var sorting = Model.ContentItems.OrderByDescending(x => x.PublishedUtc);
+
+    @foreach (var contentItem in sorting)
+    {
+        var contentItemSummary = await ContentItemDisplayManager.BuildDisplayAsync(contentItem, Model.Context.Updater, "Summary", Model.Context.GroupId);
+
+        @await DisplayAsync(contentItemSummary)
+    }
+}
+else
+{
+    <p class="alert alert-warning">@T["Объявлений нет"]</p>
+}
+
+@await DisplayAsync(Model.Pager)

@@ -1,0 +1,6 @@
+﻿
+@{
+	var term = await Orchard.GetTaxonomyTermAsync((string)Model.TaxonomyContentItemId, (string)Model.TermContentItemIds[0]);
+}
+
+<div class="status">@term</div>

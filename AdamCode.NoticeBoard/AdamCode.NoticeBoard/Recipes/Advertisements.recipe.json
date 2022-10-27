@@ -1,0 +1,1453 @@
+{
+  "name": "",
+  "displayName": "",
+  "description": "",
+  "author": "",
+  "website": "",
+  "version": "",
+  "issetuprecipe": false,
+  "categories": [],
+  "tags": [],
+  "steps": [
+    {
+      "name": "Settings",
+      "AdminSettings": {
+        "DisplayDarkMode": true,
+        "DisplayMenuFilter": false,
+        "DisplayNewMenu": false,
+        "DisplayTitlesInTopbar": false
+      }
+    },
+    {
+      "name": "Queries",
+      "Queries": [
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and c.Published = 'true'\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "PublishedAndCategory",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and c.Published = 'true'",
+          "ReturnDocuments": false,
+          "Name": "PublishedAndCategoryCount",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and (c.Published = 'true' or ((c.Owner = @userId or c.Owner = @UserName) and c.Published = 'false'))\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "AuthCategoryFilterAdvertisementsQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and (c.Owner = @userId or c.Owner = @UserName)\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "AuthCategoryMyAdvertsFilterQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE c.Owner = @userId or c.Owner = @UserName\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "AuthMyAdvertsFilterQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and (c.Published = 'true' or ((c.Owner = @userId or c.Owner = @UserName) and c.Published = 'false'))",
+          "ReturnDocuments": false,
+          "Name": "AuthCategoryFilterAdvertisementsCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE t.TermContentItemId = @categoryId and (c.Owner = @userId or c.Owner = @UserName)",
+          "ReturnDocuments": false,
+          "Name": "AuthCategoryMyAdvertsFilterCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE c.Owner = @userId or c.Owner = @UserName",
+          "ReturnDocuments": false,
+          "Name": "AuthMyAdvertsFilterCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT * FROM ContentItemIndex WHERE Published = 'true' and ContentType = 'Advertisement'",
+          "ReturnDocuments": false,
+          "Name": "PublishedQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count FROM ContentItemIndex WHERE Published = 'true' and ContentType = 'Advertisement'",
+          "ReturnDocuments": false,
+          "Name": "PublishedCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE (c.Published = 'true' or ((c.Owner = @userId or c.Owner = @UserName) and c.Published = 'false'))\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "AuthAdvertisementsQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE (c.Published = 'true' or ((c.Owner = @userId or c.Owner = @UserName) and c.Published = 'false'))",
+          "ReturnDocuments": false,
+          "Name": "AuthAdvertisementCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE (@categoryId = '' or t.TermContentItemId = @categoryId) and c.Published = 'true'\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "CommonNotAuthQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE (@categoryId = '' or t.TermContentItemId = @categoryId) and c.Published = 'true'",
+          "ReturnDocuments": false,
+          "Name": "CommonNotAuthCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT c.Id, c.DocumentId, c.ContentItemId, c.ContentItemVersionId, c.Latest, c.Published, c.ContentType,\r\n\t\tc.ModifiedUtc, c.PublishedUtc, c.CreatedUtc, c.Owner, c.Author, c.DisplayText\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE ((c.Published = 'false' and (c.Owner = @userId or c.Owner = @UserName)) or c.Published = 'true') and \r\n(@categoryId = '' or t.TermContentItemId = @categoryId) and\r\n((@filterId = '' or @filterName = '') or (c.Owner = @filterId or c.Owner = @filterName))\r\nORDER BY c.ModifiedUtc DESC\r\nLIMIT @take OFFSET @skip",
+          "ReturnDocuments": false,
+          "Name": "CommonAuthQuery",
+          "Source": "Sql",
+          "Schema": null
+        },
+        {
+          "Template": "SELECT COUNT(*) as Count\r\nFROM ContentItemIndex as c\r\nJOIN TaxonomyIndex as t ON t.ContentItemId = c.ContentItemId\r\nWHERE ((c.Published = 'false' and (c.Owner = @userId or c.Owner = @UserName)) or c.Published = 'true') and \r\n(@categoryId = '' or t.TermContentItemId = @categoryId) and\r\n((@filterId = '' or @filterName = '') or (c.Owner = @filterId or c.Owner = @filterName))\r\n",
+          "ReturnDocuments": false,
+          "Name": "CommonAuthCountQuery",
+          "Source": "Sql",
+          "Schema": null
+        }
+      ]
+    },
+    {
+      "name": "Roles",
+      "Roles": [
+        {
+          "Name": "Moderator",
+          "Description": "Moderator role",
+          "Permissions": [
+            "AccessAdminPanel",
+            "ManageOwnUserInformation"
+          ]
+        },
+        {
+          "Name": "Anonymous",
+          "Description": "Anonymous role",
+          "Permissions": [
+            "ViewContent"
+          ]
+        },
+        {
+          "Name": "Contributor",
+          "Description": "Contributor role",
+          "Permissions": [
+            "AccessAdminPanel",
+            "ManageOwnUserInformation",
+            "EditOwnContent",
+            "PreviewOwnContent",
+            "CloneOwnContent",
+            "ManageOwnMediaContent"
+          ]
+        },
+        {
+          "Name": "Author",
+          "Description": "Author role",
+          "Permissions": [
+            "EditOwnContent",
+            "DeleteOwnContent",
+            "ViewOwnContent",
+            "PreviewOwnContent",
+            "EditOwn_Advertisement",
+            "DeleteOwn_Advertisement",
+            "ViewOwn_Advertisement",
+            "PreviewOwn_Advertisement",
+            "ManageOwnMediaContent",
+            "ManageOwnUserInformation"
+          ]
+        },
+        {
+          "Name": "Authenticated",
+          "Description": "Authenticated role",
+          "Permissions": [
+            "EditOwnContent",
+            "EditContent",
+            "PublishOwnContent",
+            "PublishContent",
+            "DeleteOwnContent",
+            "ViewContent",
+            "ViewOwnContent",
+            "PreviewOwnContent",
+            "ApiViewContent",
+            "EditOwn_Advertisement",
+            "DeleteOwn_Advertisement",
+            "ViewOwn_Advertisement",
+            "PreviewOwn_Advertisement",
+            "ManageMediaContent",
+            "ManageOwnMediaContent",
+            "ManageAttachedMediaFieldsFolder"
+          ]
+        },
+        {
+          "Name": "User",
+          "Description": "User role",
+          "Permissions": [
+            "AccessAdminPanel",
+            "EditOwnContent",
+            "DeleteOwnContent",
+            "ViewOwnContent",
+            "PreviewOwnContent",
+            "EditOwn_Advertisement",
+            "DeleteOwn_Advertisement",
+            "ViewOwn_Advertisement",
+            "PreviewOwn_Advertisement",
+            "ManageOwnMediaContent",
+            "ManageAttachedMediaFieldsFolder"
+          ]
+        },
+        {
+          "Name": "Editor",
+          "Description": "Editor role",
+          "Permissions": [
+            "AccessAdminPanel",
+            "ManageOwnUserInformation",
+            "PublishContent",
+            "EditContent",
+            "DeleteContent",
+            "PreviewContent",
+            "CloneContent",
+            "ListContent",
+            "ManageMediaContent",
+            "ManageOwnMediaContent",
+            "ManageQueries",
+            "QueryLuceneApi",
+            "ManageWorkflows",
+            "ExecuteWorkflows"
+          ]
+        },
+        {
+          "Name": "Administrator",
+          "Description": "Administrator role",
+          "Permissions": [
+            "ManageSettings",
+            "AccessAdminPanel",
+            "ManageAdminSettings",
+            "EditOwnContent",
+            "EditContent",
+            "PublishOwnContent",
+            "PublishContent",
+            "DeleteOwnContent",
+            "DeleteContent",
+            "ViewContent",
+            "ViewOwnContent",
+            "PreviewOwnContent",
+            "PreviewContent",
+            "CloneContent",
+            "CloneOwnContent",
+            "AccessContentApi",
+            "ListContent",
+            "ApiViewContent",
+            "Publish_Advertisement",
+            "PublishOwn_Advertisement",
+            "Edit_Advertisement",
+            "EditOwn_Advertisement",
+            "Delete_Advertisement",
+            "DeleteOwn_Advertisement",
+            "View_Advertisement",
+            "ViewOwn_Advertisement",
+            "Preview_Advertisement",
+            "PreviewOwn_Advertisement",
+            "Clone_Advertisement",
+            "CloneOwn_Advertisement",
+            "ListContent_Advertisement",
+            "Publish_AdvertisementList",
+            "PublishOwn_AdvertisementList",
+            "Edit_AdvertisementList",
+            "EditOwn_AdvertisementList",
+            "Delete_AdvertisementList",
+            "DeleteOwn_AdvertisementList",
+            "View_AdvertisementList",
+            "ViewOwn_AdvertisementList",
+            "Preview_AdvertisementList",
+            "PreviewOwn_AdvertisementList",
+            "Clone_AdvertisementList",
+            "CloneOwn_AdvertisementList",
+            "ListContent_AdvertisementList",
+            "ViewContentTypes",
+            "EditContentTypes",
+            "ManageCultures",
+            "ManageMediaFolder",
+            "ManageMediaProfiles",
+            "ViewMediaOptions",
+            "ManageRoles",
+            "SiteOwner",
+            "ManageTaxonomy",
+            "ApplyTheme",
+            "ManageUsers",
+            "SetHomepage",
+            "ManageEmailSettings",
+            "ManageIndexes",
+            "ManageQueries",
+            "ManageSecurityHeadersSettings",
+            "ManageTenants",
+            "ManageTenantFeatureProfiles",
+            "ManageWorkflows",
+            "ExecuteWorkflows",
+            "Import",
+            "Export"
+          ]
+        }
+      ]
+    },
+    {
+      "name": "WorkflowType",
+      "data": [
+        {
+          "WorkflowTypeId": "4frsx6hey1dgt2y22y14xsd24j",
+          "Name": "EmailNotification",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "LockTimeout": 0,
+          "LockExpiration": 0,
+          "DeleteFinishedWorkflows": false,
+          "Activities": [
+            {
+              "ActivityId": "4tn9mwwf2n53at7rzshdkyf75x",
+              "Name": "EmailTask",
+              "X": 550,
+              "Y": 60,
+              "IsStart": true,
+              "Properties": {
+                "Sender": {
+                  "Expression": null
+                },
+                "Author": {
+                  "Expression": null
+                },
+                "Recipients": {
+                  "Expression": "dim5.dim5.960@gmail.com"
+                },
+                "ReplyTo": {
+                  "Expression": null
+                },
+                "Subject": {
+                  "Expression": "Новое объявление"
+                },
+                "Body": {
+                  "Expression": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<!-- saved from url=(0088)file:///C:/Users/Egor/AppData/Roaming/Skype/My%20Skype%20Received%20Files/index3(2).html -->\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">     \r\n</head>\r\n  {% assign contentItem = Workflow.Input[\"ContentItem\"] %}\r\n    <body style=\"font-family:Arial,sans-serif;font-size:16px;line-height:20px;margin:0;min-width:320px;background: #fff;\">\r\n        <table style=\"width:100%;\" cellspacing=\"0\" cellpadding=\"0\">\r\n            <tbody>\r\n                \r\n                <tr>\r\n                    <td style=\"vertical-align:top;text-align: center;\">\r\n                        <table align=\"center\" cellspacing=\"0\" cellpadding=\"0\" style=\"text-align: left; border-collapse:collapse;background: #fff; max-width: 540px;margin: 0 auto; width: 100%;\">\r\n                            <tbody>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"159\"><a href=\"\"><img src=\"1.png\" alt=\"\" /></a></td>\r\n                                                <td width=\"270\"></td>\r\n                                                <td width=\"110\">\r\n                                                    <a href=\"\"><img src=\"facebook.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"twitter.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"vk.svg\" alt=\"\" /></a>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;text-align: center;\">\r\n                                            <tr>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Новости</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Льготы</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Карьера</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Наша жизнь</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Компания</a></td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"font-size: 30px;font-family: 'Arial';line-height: 32px;\">Объявление на модерации</div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"255\">\r\n                                                    <img src=\"{{ contentItem.Content.Advertisement.Images.Paths[0] | absolute_url }}\" alt=\"\" />\r\n                                                </td>\r\n                                                <td width=\"15\"></td>\r\n                                                <td width=\"275\">\r\n                                                  {% assign categories = contentItem.Content.Advertisement.Category | taxonomy_terms %}\r\n                                                    <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #a9acae;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t{% for c in categories %}\r\n                                                      \t{{ c }}\r\n                                                      \t{% endfor %}\r\n                                                  \t</div>\r\n                                                    <div style=\"height: 5px;\"></div>\r\n                                                  {% assign contentItemId = contentItem.ContentItemId %}\r\n                                                    <div style=\"font-size: 18px;font-family: 'Arial';line-height: 24px;color: #000;\"><a style=\"color: #000;text-decoration: none;\" href=\"{{ '~/AdamCode.Advertisement/Home/Details?contentItemId=' | append: contentItemId | absolute_url }}\">{{ contentItem.DisplayText }}</a></div>\r\n                                                    <div style=\"height: 5px;\"></div>\r\n                                                    <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62;\"><a style=\"color: #555d62;text-decoration: none;\" href=\"\">Маркова Светлана</a> </div>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <a href=\"\" style=\"font-size: 15px;border-radius: 5px;background-color: #f68c28;color: #fff;text-decoration: none;padding: 10px 20px;display: inline-block;\">Перейти на сайт</a>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;text-align: center;\">\r\n                                            <tbody><tr>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Новости</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Льготы</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Карьера</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Наша жизнь</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Компания</a></td>\r\n                                            </tr>\r\n                                        </tbody></table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n\r\n\r\n\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62; \">ООО «РН Банк»</div>\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62;\">630099, г. Москва, ул. Депутатская, д. 46, этаж 5</div>\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;\">\r\n                                            <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Политика конфиденциальности</a>&nbsp;&nbsp;&nbsp;\r\n                                            <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Служба поддержки</a>\r\n                                        </div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"200\">\r\n                                                    <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Отписаться от рассылки</a>\r\n                                                </td>\r\n                                                <td width=\"230\"></td>\r\n                                                <td width=\"110\">\r\n                                                    <a href=\"\"><img src=\"facebook.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"twitter.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"vk.svg\" alt=\"\" /></a>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                            </tbody>\r\n                        </table>\r\n                    </td>\r\n                </tr>\r\n                 \r\n            </tbody>\r\n        </table>\r\n    \r\n\r\n</body></html>"
+                },
+                "IsBodyHtml": true,
+                "BodyText": {
+                  "Expression": null
+                },
+                "IsBodyText": true,
+                "Bcc": {
+                  "Expression": null
+                },
+                "Cc": {
+                  "Expression": null
+                },
+                "ActivityMetadata": {
+                  "Title": "Объявление на модерацию"
+                }
+              }
+            },
+            {
+              "ActivityId": "4dcj90dsg1w71ryzqtgh4fbeds",
+              "Name": "ContentUpdatedEvent",
+              "X": 40,
+              "Y": 60,
+              "IsStart": true,
+              "Properties": {
+                "ContentTypeFilter": [
+                  "Advertisement"
+                ],
+                "ActivityMetadata": {
+                  "Title": null
+                }
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "4dcj90dsg1w71ryzqtgh4fbeds",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "4tn9mwwf2n53at7rzshdkyf75x"
+            }
+          ]
+        },
+        {
+          "WorkflowTypeId": "49yzn3sc02k5s6c3drea1x924v",
+          "Name": "EmailNotificationForUser",
+          "IsEnabled": true,
+          "IsSingleton": false,
+          "LockTimeout": 0,
+          "LockExpiration": 0,
+          "DeleteFinishedWorkflows": false,
+          "Activities": [
+            {
+              "ActivityId": "4mdd0k5s966dftrewvvw3zas55",
+              "Name": "ContentPublishedEvent",
+              "X": 0,
+              "Y": 20,
+              "IsStart": true,
+              "Properties": {
+                "ContentTypeFilter": [
+                  "Advertisement"
+                ],
+                "ActivityMetadata": {
+                  "Title": null
+                }
+              }
+            },
+            {
+              "ActivityId": "4g7q2p3hh1vz4023agq8vkqzx9",
+              "Name": "EmailTask",
+              "X": 360,
+              "Y": 10,
+              "IsStart": true,
+              "Properties": {
+                "Sender": {
+                  "Expression": null
+                },
+                "Author": {
+                  "Expression": null
+                },
+                "Recipients": {
+                  "Expression": "{% assign contentItem = Workflow.Input[\"ContentItem\"] %} {{ contentItem.Owner | users_by_id | user_email }}"
+                },
+                "ReplyTo": {
+                  "Expression": null
+                },
+                "Subject": {
+                  "Expression": "Объявление опубликовано"
+                },
+                "Body": {
+                  "Expression": "<!DOCTYPE html PUBLIC \"-//W3C//DTD XHTML 1.0 Strict//EN\" \"http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd\">\r\n<!-- saved from url=(0088)file:///C:/Users/Egor/AppData/Roaming/Skype/My%20Skype%20Received%20Files/index3(2).html -->\r\n<html xmlns=\"http://www.w3.org/1999/xhtml\">\r\n<head>\r\n<meta http-equiv=\"Content-Type\" content=\"text/html; charset=UTF-8\">\r\n<meta name=\"viewport\" content=\"width=device-width, initial-scale=1, maximum-scale=1\">     \r\n</head>\r\n  {% assign contentItem = Workflow.Input[\"ContentItem\"] %}\r\n    <body style=\"font-family:Arial,sans-serif;font-size:16px;line-height:20px;margin:0;min-width:320px;background: #fff;\">\r\n        <table style=\"width:100%;\" cellspacing=\"0\" cellpadding=\"0\">\r\n            <tbody>\r\n                \r\n                <tr>\r\n                    <td style=\"vertical-align:top;text-align: center;\">\r\n                        <table align=\"center\" cellspacing=\"0\" cellpadding=\"0\" style=\"text-align: left; border-collapse:collapse;background: #fff; max-width: 540px;margin: 0 auto; width: 100%;\">\r\n                            <tbody>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"159\"><a href=\"\"><img src=\"1.png\" alt=\"\" /></a></td>\r\n                                                <td width=\"270\"></td>\r\n                                                <td width=\"110\">\r\n                                                    <a href=\"\"><img src=\"facebook.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"twitter.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"vk.svg\" alt=\"\" /></a>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;text-align: center;\">\r\n                                            <tr>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Новости</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Льготы</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Карьера</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Наша жизнь</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Компания</a></td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"15\">\r\n                                    <td height=\"15\"></td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"font-size: 30px;font-family: 'Arial';line-height: 32px;\">Ваше объявление опубликовано:</div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"255\">\r\n                                                    <img src=\"{{ contentItem.Content.Advertisement.Images.Paths[0] | absolute_url }}\" alt=\"\" />\r\n                                                </td>\r\n                                                <td width=\"15\"></td>\r\n                                                <td width=\"275\">\r\n                                                  {% assign categories = contentItem.Content.Advertisement.Category | taxonomy_terms %}\r\n                                                    <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #a9acae;\">\r\n\t\t\t\t\t\t\t\t\t\t\t\t\t\t{% for c in categories %}\r\n                                                      \t{{ c }}\r\n                                                      \t{% endfor %}\r\n                                                  \t</div>\r\n                                                    <div style=\"height: 5px;\"></div>\r\n                                                  {% assign contentItemId = contentItem.ContentItemId %}\r\n                                                    <div style=\"font-size: 18px;font-family: 'Arial';line-height: 24px;color: #000;\"><a style=\"color: #000;text-decoration: none;\" href=\"{{ '~/AdamCode.Advertisement/Home/Details?contentItemId=' | append: contentItemId | absolute_url }}\">{{ contentItem.DisplayText }}</a></div>\r\n                                                    <div style=\"height: 5px;\"></div>\r\n                                                    <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62;\"><a style=\"color: #555d62;text-decoration: none;\" href=\"\">Маркова Светлана</a> </div>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <a href=\"\" style=\"font-size: 15px;border-radius: 5px;background-color: #f68c28;color: #fff;text-decoration: none;padding: 10px 20px;display: inline-block;\">Перейти на сайт</a>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;text-align: center;\">\r\n                                            <tbody><tr>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Новости</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Льготы</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Карьера</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Наша жизнь</a></td>\r\n                                                <td width=\"45\"></td>\r\n                                                <td><a style=\"color: #000;text-decoration: none;font-size: 16px;font-family: 'Arial';\" href=\"\">Компания</a></td>\r\n                                            </tr>\r\n                                        </tbody></table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n\r\n\r\n\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62; \">ООО «РН Банк»</div>\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;color: #555d62;\">630099, г. Москва, ул. Депутатская, д. 46, этаж 5</div>\r\n                                        <div style=\"font-size: 15px;font-family: 'Arial';line-height: 24px;\">\r\n                                            <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Политика конфиденциальности</a>&nbsp;&nbsp;&nbsp;\r\n                                            <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Служба поддержки</a>\r\n                                        </div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <div style=\"border-top: 1px solid #d8d8d8;\"></div>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                                <tr>\r\n                                    <td>\r\n                                        <table cellspacing=\"0\" cellpadding=\"0\" style=\"width: 100%;\">\r\n                                            <tr>\r\n                                                <td width=\"200\">\r\n                                                    <a style=\"color: #f68c28;text-decoration: none;font-size: 15px;font-family: 'Arial';\" href=\"\">Отписаться от рассылки</a>\r\n                                                </td>\r\n                                                <td width=\"230\"></td>\r\n                                                <td width=\"110\">\r\n                                                    <a href=\"\"><img src=\"facebook.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"twitter.svg\" alt=\"\" /></a>\r\n                                                    &nbsp;&nbsp;\r\n                                                    <a href=\"\"><img src=\"vk.svg\" alt=\"\" /></a>\r\n                                                </td>\r\n                                            </tr>\r\n                                        </table>\r\n                                    </td>\r\n                                </tr>\r\n                                <tr height=\"30\">\r\n                                    <td height=\"30\"></td>\r\n                                </tr>\r\n                            </tbody>\r\n                        </table>\r\n                    </td>\r\n                </tr>\r\n                 \r\n            </tbody>\r\n        </table>\r\n    \r\n\r\n</body></html>"
+                },
+                "IsBodyHtml": true,
+                "BodyText": {
+                  "Expression": null
+                },
+                "IsBodyText": true,
+                "Bcc": {
+                  "Expression": null
+                },
+                "Cc": {
+                  "Expression": null
+                },
+                "ActivityMetadata": {
+                  "Title": "Объявление опубликовано"
+                }
+              }
+            }
+          ],
+          "Transitions": [
+            {
+              "Id": 0,
+              "SourceActivityId": "4mdd0k5s966dftrewvvw3zas55",
+              "SourceOutcomeName": "Done",
+              "DestinationActivityId": "4g7q2p3hh1vz4023agq8vkqzx9"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "media",
+      "Files": []
+    },
+    {
+      "name": "ContentDefinition",
+      "ContentTypes": [
+        {
+          "Name": "Taxonomy",
+          "DisplayName": "Taxonomy",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "AliasPart",
+              "Name": "AliasPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                },
+                "AliasPartSettings": {
+                  "Pattern": "{{ Model.ContentItem | display_text | slugify }}"
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                },
+                "AutoroutePartSettings": {
+                  "Pattern": "{{ Model.ContentItem | display_text | slugify }}",
+                  "AllowRouteContainedItems": true
+                }
+              }
+            },
+            {
+              "PartName": "TaxonomyPart",
+              "Name": "TaxonomyPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "4"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Category",
+          "DisplayName": "Category",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Category",
+              "Name": "Category",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Advertisement",
+          "DisplayName": "Advertisement",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "Advertisement",
+              "Name": "Advertisement",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "AliasPart",
+              "Name": "AliasPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "AdvertisementList",
+          "DisplayName": "AdvertisementList",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Creatable": true,
+              "Listable": true,
+              "Draftable": true,
+              "Versionable": true,
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "AdvertisementList",
+              "Name": "AdvertisementList",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "AutoroutePart",
+              "Name": "AutoroutePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "2"
+                },
+                "AutoroutePartSettings": {
+                  "AllowCustomPath": true,
+                  "ShowHomepageOption": true,
+                  "AllowUpdatePath": true,
+                  "AllowDisabled": true,
+                  "AllowRouteContainedItems": true,
+                  "ManageContainedItemRoutes": true
+                },
+                "GraphQLContentTypePartSettings": {},
+                "ContentIndexSettings": {}
+              }
+            },
+            {
+              "PartName": "ListPart",
+              "Name": "ListPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "3"
+                },
+                "ListPartSettings": {
+                  "PageSize": 10,
+                  "ContainedContentTypes": [
+                    "Advertisement"
+                  ]
+                },
+                "GraphQLContentTypePartSettings": {},
+                "ContentIndexSettings": {
+                  "Included": true
+                }
+              }
+            },
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "Form",
+          "DisplayName": "Form",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "TitlePartSettings": {
+                  "RenderTitle": false
+                },
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "1"
+                }
+              }
+            },
+            {
+              "PartName": "FormPart",
+              "Name": "FormPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "FlowPart",
+              "Name": "FlowPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Label",
+          "DisplayName": "Label",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "TitlePart",
+              "Name": "TitlePart",
+              "Settings": {
+                "TitlePartSettings": {
+                  "RenderTitle": false
+                }
+              }
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "LabelPart",
+              "Name": "LabelPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Input",
+          "DisplayName": "Input",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "FormInputElementPart",
+              "Name": "FormInputElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "InputPart",
+              "Name": "InputPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "TextArea",
+          "DisplayName": "Text Area",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "FormInputElementPart",
+              "Name": "FormInputElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "TextAreaPart",
+              "Name": "TextAreaPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Select",
+          "DisplayName": "Select",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "FormInputElementPart",
+              "Name": "FormInputElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "SelectPart",
+              "Name": "SelectPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Button",
+          "DisplayName": "Button",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "FormInputElementPart",
+              "Name": "FormInputElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "FormElementPart",
+              "Name": "FormElementPart",
+              "Settings": {}
+            },
+            {
+              "PartName": "ButtonPart",
+              "Name": "ButtonPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "ValidationSummary",
+          "DisplayName": "Validation Summary",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "ValidationSummaryPart",
+              "Name": "ValidationSummaryPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "Validation",
+          "DisplayName": "Validation",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Stereotype": "Widget"
+            }
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "ValidationPart",
+              "Name": "ValidationPart",
+              "Settings": {}
+            }
+          ]
+        },
+        {
+          "Name": "RawHtml",
+          "DisplayName": "RawHtml",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget",
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "RawHtml",
+              "Name": "RawHtml",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "BirthdayBox",
+          "DisplayName": "BirthdayBox",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget",
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "BirthdayBox",
+              "Name": "BirthdayBox",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        },
+        {
+          "Name": "StatusAdvertisement",
+          "DisplayName": "StatusAdvertisement",
+          "Settings": {
+            "ContentTypeSettings": {
+              "Draftable": true,
+              "Versionable": true,
+              "Stereotype": "Widget",
+              "Securable": true
+            },
+            "FullTextAspectSettings": {}
+          },
+          "ContentTypePartDefinitionRecords": [
+            {
+              "PartName": "StatusAdvertisement",
+              "Name": "StatusAdvertisement",
+              "Settings": {
+                "ContentTypePartSettings": {
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        }
+      ],
+      "ContentParts": [
+        {
+          "Name": "LiquidPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a Liquid formatted body for your content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "CommonPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides an editor for the common properties of a content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "AliasPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a way to define custom aliases for content items."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "PreviewPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a way to define the url that is used to render your content item for preview. You only need to use this for the content preview feature when running the frontend decoupled from the admin."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "TitlePart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a Title for your content item.",
+              "DefaultPosition": "0"
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "Advertisement",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "TextField",
+              "Name": "Description",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Description",
+                  "Position": "0"
+                },
+                "TextFieldSettings": {
+                  "Required": true
+                },
+                "ContentIndexSettings": {}
+              }
+            },
+            {
+              "FieldName": "MediaField",
+              "Name": "Images",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Images",
+                  "Editor": "Attached",
+                  "Position": "1"
+                },
+                "MediaFieldSettings": {
+                  "Required": true
+                }
+              }
+            },
+            {
+              "FieldName": "TaxonomyField",
+              "Name": "Category",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Category",
+                  "Position": "2"
+                },
+                "TaxonomyFieldSettings": {
+                  "Required": true,
+                  "TaxonomyContentItemId": "4tgbdyhehen3t7nq4ty6h1whm7",
+                  "Unique": true
+                },
+                "ContentIndexSettings": {}
+              }
+            }
+          ]
+        },
+        {
+          "Name": "AutoroutePart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a custom url for your content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "ListPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Add a list behavior."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "WidgetsListPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a way to add widgets to Layout zones for your content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "HtmlBodyPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides an HTML Body for your content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "FlowPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a customizable body for your content item where you can build a content structure with widgets."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "BagPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Reusable": true,
+              "Description": "Provides a collection behavior for your content item where you can place other content items."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "FormPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Turns your content item into a form."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "FormElementPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides attributes common to all form elements."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "FormInputElementPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides attributes common to all input form elements."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "LabelPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides label properties."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "InputPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides input field properties."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "TextAreaPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides text area properties."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "SelectPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides select field properties."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "ButtonPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Provides button properties."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "ValidationSummaryPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Displays a validation summary."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "ValidationPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Description": "Displays a field validation error."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "MarkdownBodyPart",
+          "Settings": {
+            "ContentPartSettings": {
+              "Attachable": true,
+              "Description": "Provides a Markdown formatted body for your content item."
+            }
+          },
+          "ContentPartFieldDefinitionRecords": []
+        },
+        {
+          "Name": "RawHtml",
+          "Settings": {},
+          "ContentPartFieldDefinitionRecords": [
+            {
+              "FieldName": "HtmlField",
+              "Name": "Html",
+              "Settings": {
+                "ContentPartFieldSettings": {
+                  "DisplayName": "Html",
+                  "Position": "0"
+                }
+              }
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "BaseUrl": null,
+      "Calendar": null,
+      "MaxPagedCount": 0,
+      "MaxPageSize": 100,
+      "PageSize": 5,
+      "TimeZoneId": "Europe/Saratov",
+      "ResourceDebugMode": 0,
+      "SiteName": "РН Банк",
+      "SiteSalt": "c320da53268e4f72bb66a33ad3b665fc",
+      "PageTitleFormat": "{% page_title Site.SiteName, position: \"after\", separator: \" - \" %}",
+      "SuperUser": "4mqhgasnsjx9j7w6ssv73py1m6",
+      "UseCdn": false,
+      "CdnBaseUrl": null,
+      "HomeRoute": {
+        "Action": "Display",
+        "Controller": "Item",
+        "Area": "OrchardCore.Contents",
+        "contentItemId": "4kmt06rgk88zeyzy2m87dd3fwg",
+        "jsonPath": ""
+      },
+      "AppendVersion": true,
+      "CacheMode": 0
+    },
+    {
+      "name": "Themes",
+      "Site": "AdamCode.NoticeBoard.Theme",
+      "Admin": "TheAdmin"
+    },
+    {
+      "name": "Feature",
+      "enable": [
+        "AdamCode.NoticeBoard",
+        "Application.Default",
+        "OrchardCore.Settings",
+        "OrchardCore.Admin",
+        "OrchardCore.Apis.GraphQL",
+        "OrchardCore.BackgroundTasks",
+        "OrchardCore.Liquid",
+        "OrchardCore.Contents",
+        "OrchardCore.ContentTypes",
+        "OrchardCore.Shortcodes",
+        "OrchardCore.ContentFields",
+        "OrchardCore.ContentPreview",
+        "OrchardCore.DynamicCache",
+        "OrchardCore.Resources",
+        "OrchardCore.Features",
+        "OrchardCore.Scripting",
+        "OrchardCore.Rules",
+        "OrchardCore.Widgets",
+        "OrchardCore.Layers",
+        "OrchardCore.Localization",
+        "OrchardCore.Media",
+        "OrchardCore.Navigation",
+        "OrchardCore.Recipes",
+        "OrchardCore.Roles",
+        "OrchardCore.Taxonomies",
+        "OrchardCore.Themes",
+        "OrchardCore.Users",
+        "AdamCode.Advertisement",
+        "OrchardCore.Alias",
+        "OrchardCore.Autoroute",
+        "OrchardCore.Deployment",
+        "OrchardCore.Diagnostics",
+        "OrchardCore.Email",
+        "OrchardCore.Feeds",
+        "OrchardCore.Flows",
+        "OrchardCore.Forms",
+        "OrchardCore.Html",
+        "OrchardCore.Indexing",
+        "OrchardCore.Lists",
+        "OrchardCore.Lucene",
+        "OrchardCore.Markdown",
+        "OrchardCore.Media.Cache",
+        "OrchardCore.Title",
+        "OrchardCore.Queries",
+        "OrchardCore.Queries.Sql",
+        "OrchardCore.Security",
+        "OrchardCore.Shortcodes.Templates",
+        "OrchardCore.Taxonomies.ContentsAdminList",
+        "OrchardCore.Tenants",
+        "OrchardCore.Workflows",
+        "OrchardCore.Workflows.Http",
+        "AdamCode.NoticeBoard.Theme",
+        "SafeMode",
+        "TheAdmin",
+        "TheTheme"
+      ],
+      "disable": [
+        "OrchardCore.AdminDashboard",
+        "OrchardCore.AdminMenu",
+        "OrchardCore.Templates",
+        "OrchardCore.AdminTemplates",
+        "OrchardCore.AuditTrail",
+        "OrchardCore.Setup",
+        "OrchardCore.AutoSetup",
+        "OrchardCore.ContentFields.Indexing.SQL",
+        "OrchardCore.ContentFields.Indexing.SQL.UserPicker",
+        "OrchardCore.ContentLocalization",
+        "OrchardCore.ContentLocalization.ContentCulturePicker",
+        "OrchardCore.Sitemaps",
+        "OrchardCore.ContentLocalization.Sitemaps",
+        "OrchardCore.Contents.Deployment.AddToDeploymentPlan",
+        "OrchardCore.Contents.Deployment.Download",
+        "OrchardCore.Contents.Deployment.ExportContentToDeploymentTarget",
+        "OrchardCore.Contents.FileContentDefinition",
+        "OrchardCore.Cors",
+        "OrchardCore.CustomSettings",
+        "OrchardCore.DataProtection.Azure",
+        "OrchardCore.Deployment.Remote",
+        "OrchardCore.Facebook",
+        "OrchardCore.Facebook.Login",
+        "OrchardCore.Facebook.Widgets",
+        "OrchardCore.GitHub.Authentication",
+        "OrchardCore.Google.Analytics",
+        "OrchardCore.Google.GoogleAuthentication",
+        "OrchardCore.Google.TagManager",
+        "OrchardCore.HealthChecks",
+        "OrchardCore.HomeRoute",
+        "OrchardCore.Https",
+        "OrchardCore.Localization.ContentLanguageHeader",
+        "OrchardCore.Lucene.ContentPicker",
+        "OrchardCore.Lucene.Worker",
+        "OrchardCore.Media.AmazonS3",
+        "OrchardCore.Media.Azure.Storage",
+        "OrchardCore.Media.Slugify",
+        "OrchardCore.Menu",
+        "OrchardCore.Microsoft.Authentication.AzureAD",
+        "OrchardCore.Microsoft.Authentication.MicrosoftAccount",
+        "OrchardCore.MiniProfiler",
+        "OrchardCore.OpenId",
+        "OrchardCore.OpenId.Client",
+        "OrchardCore.OpenId.Management",
+        "OrchardCore.OpenId.Server",
+        "OrchardCore.OpenId.Validation",
+        "OrchardCore.Placements",
+        "OrchardCore.Placements.FileStorage",
+        "OrchardCore.PublishLater",
+        "OrchardCore.ReCaptcha",
+        "OrchardCore.ReCaptcha.Users",
+        "OrchardCore.Redis",
+        "OrchardCore.Redis.Bus",
+        "OrchardCore.Redis.Cache",
+        "OrchardCore.Redis.DataProtection",
+        "OrchardCore.Redis.Lock",
+        "OrchardCore.XmlRpc",
+        "OrchardCore.RemotePublishing",
+        "OrchardCore.ResponseCompression",
+        "OrchardCore.ReverseProxy",
+        "OrchardCore.Seo",
+        "OrchardCore.Sitemaps.Cleanup",
+        "OrchardCore.Sitemaps.RazorPages",
+        "OrchardCore.Spatial",
+        "OrchardCore.Tenants.Distributed",
+        "OrchardCore.Tenants.FeatureProfiles",
+        "OrchardCore.Tenants.FileProvider",
+        "OrchardCore.Twitter",
+        "OrchardCore.Twitter.Signin",
+        "OrchardCore.Users.AuditTrail",
+        "OrchardCore.Users.ChangeEmail",
+        "OrchardCore.Users.CustomUserSettings",
+        "OrchardCore.Users.Registration",
+        "OrchardCore.Users.ResetPassword",
+        "OrchardCore.Users.TimeZone",
+        "OrchardCore.Workflows.Session",
+        "OrchardCore.Workflows.Timers",
+        "TheAgencyTheme",
+        "TheBlogTheme",
+        "TheComingSoonTheme"
+      ]
+    },
+    {
+      "name": "Layers",
+      "Layers": [
+        {
+          "Name": "Always",
+          "Rule": null,
+          "Description": null,
+          "LayerRule": {
+            "Conditions": [
+              {
+                "$type": "OrchardCore.Rules.Models.BooleanCondition, OrchardCore.Rules",
+                "Value": true,
+                "Name": "BooleanCondition",
+                "ConditionId": "4fssahrsnpad06c8e3qjy35aw8"
+              }
+            ],
+            "Name": null,
+            "ConditionId": "4390vvpgv30v7vfndjab8a5qdm"
+          }
+        }
+      ]
+    },
+    {
+      "name": "Settings",
+      "LayerSettings": {
+        "Zones": [
+          "FastLinkAside",
+          "BirthdayAside",
+          "StatusAdvAside"
+        ]
+      }
+    }
+  ]
+}

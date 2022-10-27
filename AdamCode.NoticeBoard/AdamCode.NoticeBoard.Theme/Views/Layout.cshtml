@@ -1,0 +1,33 @@
+﻿<!DOCTYPE html>
+<!--[if lt IE 7 ]><html class="ie ie6" lang="en"> <![endif]-->
+<!--[if IE 7 ]><html class="ie ie7" lang="en"> <![endif]-->
+<!--[if IE 8 ]><html class="ie ie8" lang="en"> <![endif]-->
+<!--[if (gte IE 9)|!(IE)]><!--><html lang="@Orchard.CultureName()"> <!--<![endif]-->
+
+<head>
+	@await Html.PartialAsync("MetatagsPartial")
+	@await Html.PartialAsync("CssPartial")
+</head>
+
+<body dir="@Orchard.CultureDir()">
+<div id="wrapper">
+	@await Html.PartialAsync("HeaderPartial")
+	<div class="main bg-white">
+		@await RenderBodyAsync()
+	</div>
+	@await Html.PartialAsync("FooterPartial")
+</div>
+
+
+	<!--[if lt IE 9]>
+	<script src="libs/html5shiv/es5-shim.min.js"></script>
+	<script src="libs/html5shiv/html5shiv.min.js"></script>
+	<script src="libs/html5shiv/html5shiv-printshiv.min.js"></script>
+	<script src="libs/respond/respond.min.js"></script>
+	<![endif]-->
+
+	<resources type="FootScript" />
+	@await Html.PartialAsync("JsPartial")
+	
+</body>
+</html>

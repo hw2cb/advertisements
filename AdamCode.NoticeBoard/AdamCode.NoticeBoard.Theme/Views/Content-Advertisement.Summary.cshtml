@@ -1,0 +1,20 @@
+﻿
+
+<div class="news-item">
+	<div class="row">
+		@await DisplayAsync(Model.Header)
+
+		<div class="col-sm-8 col-xs-12">
+			<div class="text">
+				<div class="date date-bottom">@Model.ContentItem.PublishedUtc.ToString("M")</div>
+				@await DisplayAsync(Model.Content)
+				<div class="ico-name">
+					<a href="">
+					<div class="ico"><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></div>
+					<div class="n">Николай Воложский</div>
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

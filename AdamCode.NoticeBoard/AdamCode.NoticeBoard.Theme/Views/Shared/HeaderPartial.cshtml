@@ -1,0 +1,55 @@
+﻿<div class="header">
+	<div class="container">
+		<div class="top-line">
+			<div class="logo"><a href=""><img src="~/AdamCode.NoticeBoard.Theme/img/logo.svg" alt=""></a></div>
+			<form action="" class="search-form">
+				<input type="text" placeholder="Поиск">
+				<input type="submit" value="">
+			</form>
+			
+				@if(User.Identity.IsAuthenticated)
+				{
+				<div class="lk-box">
+			
+					<div class="img"><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></div>
+					<div class="tt">
+						<div class="hi">Здравствуйте</div>
+						<div class="name">Виктория Николаевна</div>
+					</div>
+					<div class="drop-list">
+						<ul>
+							<li><a href="">Изменить</a></li>
+							<form asp-route-area="OrchardCore.Users" asp-controller="Account" asp-action="LogOff" method="post">
+								<button type="submit">Выйти</button>
+							</form>
+						</ul>
+						</div>
+				</div>
+				}
+				else
+				{
+					<div class="login-panel">
+						<a asp-action="Login" asp-controller="Account">Войти</a>
+						<a asp-action="Register" asp-controller="Account">Зарегистрироваться</a>
+					</div>
+
+				}
+		</div>
+		<div class="toggle_mnu">
+			<span class="sandwich">
+			<span class="sw-topper"></span>
+			<span class="sw-bottom"></span>
+			<span class="sw-footer"></span>
+			</span>
+		</div>
+		<ul class="nav">
+			<li><a href="">Новости</a></li>
+			<li><a href="">Льготы</a></li>
+			<li><a href="">Сервисы и документы</a></li>
+			<li><a href="">Карьера</a></li>
+			<li><a href="">Наша жизнь</a></li>
+			<li><a href="">Справочник</a></li>
+			<li><a href="">Компания</a></li>
+		</ul>
+	</div>
+</div>

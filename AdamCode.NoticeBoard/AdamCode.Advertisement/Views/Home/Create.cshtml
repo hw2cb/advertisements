@@ -1,0 +1,39 @@
+﻿
+<div class="toping-box">
+	<div class="container">
+		<ul class="pagin">
+			<li><a href="">Главная</a></li>
+		</ul>
+		<div class="title">Создание нового объявления</div>
+	</div>
+</div>
+<div class="container">
+	<div class="two-columns">
+		<div class="row">
+			<div class="col-md-9 col-sm-12">
+				<div class="content-box">
+					<div class="section-padding">
+						<form asp-area="AdamCode.Advertisement" asp-controller="Home" asp-action="Create" asp-route-contentItemId="@Model.ContentItem.ContentItemId" asp-route-returnUrl="@Context.Request.Query["ReturnUrl"]" method="post" enctype="multipart/form-data" class="default-form edit-form">
+							@await DisplayAsync(Model.Content)
+							<div class="row-inp">
+								<p class="label">Объявление будет отправлено на модерацию</p>
+								<button name="submit.Publish" value="submit.PublishAndContinue" type="submit" class="btn">Сохранить</button>
+							</div>
+						</form>
+					</div>
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<div class="aside aside-moved-top">
+					<div class="aside-box news-archive">
+						<div class="aside-title title">Объявление опубликовано</div>
+						<ul class="month-list">
+							<li><a href="">В архив</a></li>
+							<li><a href="">Удалить</a></li>
+						</ul>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

@@ -1,0 +1,51 @@
+﻿@using AdamCode.NoticeBoard.Theme.Extensions
+@using Microsoft.AspNetCore.Identity
+@using System.Security.Claims
+@{
+	var isAdmin = User.IsInRole("Administrator") || User.IsInRole("Moderator");
+	var contentItem = ViewBag.ContentItem;
+	string returnUrl = ViewContext.HttpContext.Request.PathAndQuery();
+}
+
+
+<div class="aside-box news-archive">
+	@if(contentItem != null)
+	{
+		@if (contentItem.Published)
+		{
+			<div class="aside-title title">Объявление опубликовано</div>
+		}
+		else
+		{
+			<div class="aside-title title">Объявление на модерации</div>
+			if (isAdmin)
+			{
+	@*			<a asp-action="Publish" asp-area="AdamCode.Advertisement" asp-controller="Home" asp-route-contentItemId="@contentItem.ContentItem.ContentItemId" class="btn">Опубликовать</a>
+	*@			<form asp-action="Publish" asp-area="AdamCode.Advertisement" asp-controller="Home" method="post" asp-route-returnUrl="@returnUrl">
+					<input type="hidden" name="contentItemId" value="@contentItem.ContentItem.ContentItemId"/>
+					<input class="btn" type="submit" value="Опубликовать"/>
+				</form>
+			}
+		}
+		<ul class="month-list">
+			<li><a asp-action="Edit" asp-area="AdamCode.Advertisement" asp-controller="Home" asp-route-contentItemId="@contentItem.ContentItem.ContentItemId">Редактировать</a></li>
+			@if(isAdmin)
+			{
+				<li>
+					<form asp-action="SendToModeration" asp-area="AdamCode.Advertisement" asp-controller="Home" method="post">
+						<input type="hidden" name="contentItemId" value="@contentItem.ContentItem.ContentItemId"/>
+						<input type="submit" value="На модерацию"/>
+					</form>
+				</li>
+				<li><a href="">В архив</a></li>
+			}
+			<li>
+				<form asp-action="Delete" asp-controller="Home" asp-area="AdamCode.Advertisement" method="post">
+					<input type="hidden" name="contentItemId" value="@contentItem.ContentItem.ContentItemId"/>
+					<input type="submit" value="Удалить" />
+				</form>
+			</li>
+		</ul>
+	}
+	
+</div>

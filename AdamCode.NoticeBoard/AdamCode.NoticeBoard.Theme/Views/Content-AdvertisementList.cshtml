@@ -1,0 +1,87 @@
+﻿
+<div class="toping-box">
+	<div class="container">
+		<ul class="pagin">
+			<li><a href="">Главная</a></li>
+			<li><a href="">Кредитный департамент</a></li>
+			<li><a href="">Отдел прогназирования спроса</a></li>
+		</ul>
+		@await DisplayAsync(Model.Header)
+ 		<form method="get" asp-action="Create" asp-area="AdamCode.Advertisement" asp-controller="Home" class="thanks-from default-form cat-form">
+			<div class="inp">
+				<p class="label">Категории</p>
+				<select>
+					<option value="">Любая</option>
+					<option value="">Любая</option>
+				</select>
+			</div>
+			<div class="ch">
+				<input type="checkbox" id="c1">
+				<label for="c1">Мои объявления</label>
+			</div>
+			<input class="btn" type="submit" value="+ Добавить объявлени">
+		</form>
+	</div>
+</div>
+<div class="container">
+	<div class="two-columns">
+		<div class="row">
+			<div class="col-md-9 col-sm-12">
+				<div class="content-box">
+							
+					<div class="news-box section-padding">
+						@await DisplayAsync(Model.Content)
+
+@*						<div class="pager">
+							<ul>
+								<li class="active"><a href="">1</a></li>
+								<li><a href="">2</a></li>
+								<li><a href="">3</a></li>
+								<li><a href="">4</a></li>
+								<li><a href="">5</a></li>
+								<li><a href="">Следующая ></a></li>
+							</ul>
+						</div>*@
+					</div>
+
+				</div>
+			</div>
+			<div class="col-md-3 col-sm-12">
+				<div class="aside aside-moved-top">
+					<div class="aside-box fast-links">
+						<div class="aside-title title">Быстрые ссылки</div>
+						<ul class="list">
+							<li><a href="">Анонсы</a></li>
+							<li><a href="">Оргструктура</a></li>
+							<li><a href="">Онлайн библиотека</a></li>
+							<li><a href="">Объявления</a></li>
+						</ul>
+						<a href="" class="like">Скажи спасибо</a>
+					</div>
+					<div class="aside-box birthday-box">
+						<div class="aside-title title">Ближайшие дни рождения</div>
+						<ul class="list">
+							<li>
+								<div class="img"><a href=""><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></a></div>
+								<div class="tt">
+									<div class="date">26 марта</div>
+									<div class="name"><a href="">Анна Ефремова</a></div>
+									<div class="fah">Дизайнер</div>
+								</div>
+							</li>
+							<li>
+								<div class="img"><a href=""><img src="~/AdamCode.NoticeBoard.Theme/img/face.png" alt=""></a></div>
+								<div class="tt">
+									<div class="date">26 марта</div>
+									<div class="name"><a href="">Анна Ефремова</a></div>
+									<div class="fah">Дизайнер</div>
+								</div>
+							</li>
+						</ul>
+						<a href="" class="more-link">Показать больше</a>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
